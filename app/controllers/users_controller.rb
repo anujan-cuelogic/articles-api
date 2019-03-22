@@ -4,7 +4,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = if params[:name].present?
+      User.where('name ILIKE ?  ', "%#{params[:name].strip}%").order(created_at: :desc)
+    else
+      User.order(created_at: :desc)
+    end
     render json: @users
   end
 

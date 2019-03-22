@@ -1,10 +1,9 @@
 class User < ApplicationRecord
 
   has_many :articles
-  has_many :quotes
 
-  def number_of_quotes
-    id + 1
+  def number_of_articles
+    articles.count
   end
 
   def number_of_followers

@@ -1,10 +1,12 @@
 class ArticlesController < ApplicationController
+
   before_action :set_article, only: [:show, :update, :destroy]
+  before_action :find_user, only: [:create, :update]
 
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    @articles = Article.order(created_at: :desc)
     render json: @articles
   end
 
@@ -18,6 +20,8 @@ class ArticlesController < ApplicationController
   # POST /articles.json
   def create
     @article = Article.new(article_params)
+    @article.user = @user
+    puts '----> create', @article
     if @article.save
       render json: @article
     else
@@ -42,13 +46,19 @@ class ArticlesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_article
       @article = Article.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def find_user
+      @user = User.find(params[:data][:relationships][:user][:data][:id])
+    end
+
     def article_params
-      params.require(:data).require(:article).permit(:body, :user_id)
+      puts '============= before serialization', params.inspect
+      # ActiveModel::Serializer::Adapter::JsonApi::Deserialization.parse(params.to_h)
+      # puts '============= after serialization', params.inspect
+      params.require(:data).require(:attributes).permit(:body)
     end
 end
