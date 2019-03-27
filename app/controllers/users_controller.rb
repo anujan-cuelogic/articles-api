@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
+  before_action :see_params_headers, :authenticate_user!, except: :create
+   require 'json_web_token'
+
   # GET /users
   # GET /users.json
   def index
@@ -24,7 +27,13 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render :show, status: :created, location: @user
+      token = JsonWebToken.encode(uuid: @user.uuid)
+      # render json: {
+      #   user: @user,
+      #   token: token,
+      #   exp: (Time.now + 2.hours).strftime("%m-%d-%Y %H:%M"),
+      # }, status: :ok
+      render json: @user, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -54,6 +63,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :username)
+      if params.dig(:user)
+        params.require(:user).permit(:name, :username, :password)
+      elsif params.dig(:data, :attributes)
+        params.require(:data).require(:attributes).permit(:name, :username, :password)
+      end
     end
 end

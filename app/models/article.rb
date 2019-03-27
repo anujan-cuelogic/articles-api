@@ -1,4 +1,7 @@
 class Article < ApplicationRecord
+
+	attr_accessor :load_more
+
   belongs_to :user
 
   def created_date

@@ -40,6 +40,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'rack-cors'
 
+gem 'devise'
+
+gem 'jwt'
+
 # gem 'active_model_serializers', '~> 0.10.2'
 
 group :development, :test do
