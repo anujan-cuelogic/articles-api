@@ -1,6 +1,25 @@
 class ApplicationController < ActionController::API
 
   # before_action :add_allow_credentials_headers
+  require 'json_web_token'
+
+  def see_params_headers
+    puts params.inspect, '', request.headers['Authorization'].inspect
+  end
+
+  def authenticate_user!
+    header = request.headers['Authorization']
+    header = header.split(' ').last if header
+    begin
+      @decoded = JsonWebToken.decode(header)
+      @current_user = User.find_by_uuid(@decoded[:uuid])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: e.message }, status: :unauthorized
+    rescue JWT::DecodeError => e
+      render json: { errors: e.message }, status: :unauthorized
+    end
+
+  end
 
   def add_allow_credentials_headers                                                                                                                                                                                                                                                        
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#section_5
