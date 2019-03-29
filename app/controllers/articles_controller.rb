@@ -8,13 +8,13 @@ class ArticlesController < ApplicationController
   # GET /articles.json
   def index
     @articles = Article.order(created_at: :desc)
-    render json: @articles
+    render json: @articles, include: %w(user)
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
-    render json: @article
+    render json: @article, include: %w(user)
   end
 
   # POST /articles
