@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    render json: @user
+    render json: @user, include: %w(articles)
   end
 
   # POST /users
