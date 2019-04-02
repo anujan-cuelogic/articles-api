@@ -1,10 +1,12 @@
 class AuthenticationsController < ApplicationController
 
   require 'json_web_token'
+  require 'base64'
 
   def login
     @user = User.find_by_username(params[:username])
-    if @user&.valid_password?(params[:password])
+    decrypted_password = Base64.decode64(params[:password])
+    if @user&.valid_password?(decrypted_password)
       token = JsonWebToken.encode(uuid: @user.uuid)
       render json: {
         user_id: @user.id,
