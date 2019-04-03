@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :update_current_user]
 
-  before_action :see_params_headers, :authenticate_user!, except: :create
+  before_action :see_params_headers, :authenticate_user!, except: [:create, :update_current_user]
    require 'json_web_token'
+
+  def update_current_user
+    
+    @user.update!(bio: params[:bio])
+    @user.save!
+    render json: @user
+  end
 
   # GET /users
   # GET /users.json
@@ -59,7 +66,7 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find_by_id(params[:id])
-      (render json: {message: 'Invalid ID'}, status: :not_found) if @user.blank?
+      render json: {message: 'Invalid ID'}, status: :not_found if @user.blank?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
