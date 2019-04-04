@@ -2,7 +2,7 @@ class AddDeviseColumnsToUsers < ActiveRecord::Migration[5.2]
 
   def change
 
-    # add_column :users, :email, :string
+    add_column :users, :email, :string
     add_column :users, :uuid, :string
     add_column :users, :encrypted_password, :string, null: false, default: ""
     add_column :users, :reset_password_token, :string    
