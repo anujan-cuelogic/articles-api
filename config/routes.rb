@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   match '*any' => 'application#options', :via => [:options]
 
   resources :quotes
-  resources :users
-  post 'update_user', to: 'users#update_current_user'
+
+  resources :users do
+    put :update_profile, on: :member
+  end
 
   resource :authentication do
     post :login, on: :collection
