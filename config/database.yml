@@ -11,3 +11,13 @@ development:
   database: quotes_development
   username: rails_dev
   password: 123456
+
+
+production:
+  <<: *default
+  port: 5432
+  database: quotes_production
+  username: rails_dev
+  password: 123456
+  host: postgres-9-5-14.cfl1vkqqm6f0.ap-south-1.rds.amazonaws.com
+  
