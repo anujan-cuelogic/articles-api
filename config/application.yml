@@ -1,0 +1,19 @@
+# Add configuration values here, as shown below.
+#
+# pusher_app_id: "2954"
+# pusher_key: 7381a978f7dd7f9a1117
+# pusher_secret: abdc3b896a0ffb85d373
+# stripe_api_key: sk_test_2J0l093xOyW72XUYJHE4Dv2r
+# stripe_publishable_key: pk_test_ro9jV5SNwGb1yYlQfzG17LHK
+#
+# production:
+#   stripe_api_key: sk_live_EeHnL644i6zo4Iyq4v1KdV9H
+#   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
+
+# HELLO_WORLD_DATABASE_PASSWORD: <password-you-created-on-RDS>
+# HELLO_WORLD_DATABASE_HOST: <endpoint-value-of-RDS-instance>
+# HELLO_WORLD_DATABASE_PORT: "5432"
+
+production:
+  SECRET_KEY_BASE: 5a5ec2ac604b0422a53efbe77e22484199b893d243961f8b052b233ffe44364d0a3a617066c5eb6340d39066d3b6ab67c3e046c62d30fca905bf33507eb9092a #Rails.application.credentials[:secret_key_base]
+
