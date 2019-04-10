@@ -1,6 +1,6 @@
-role :app, %w{deploy_user@13.233.165.19}
-role :web, %w{deploy_user@13.233.165.19}
-role :db,  %w{deploy_user@13.233.165.19}
+role :app, %w{deploy_user@13.234.153.162}
+role :web, %w{deploy_user@13.234.153.162}
+role :db,  %w{deploy_user@13.234.153.162}
 set :ssh_options, {
    keys: %w('~/.ssh/ec2-key-pair.pem'),
    forward_agent: false,
