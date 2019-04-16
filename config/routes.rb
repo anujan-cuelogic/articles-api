@@ -2,12 +2,15 @@ Rails.application.routes.draw do
 
   devise_for :authors
   resources :articles
-  match '*any' => 'application#options', :via => [:options]
+  match '*any' => 'application#options', via: [:options]
 
   resources :quotes
 
   resources :users do
-    put :update_profile, on: :member
+    member do
+      put :update_profile
+      put :profile_picture
+    end
   end
 
   resource :authentication do

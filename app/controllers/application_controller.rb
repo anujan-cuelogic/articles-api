@@ -3,10 +3,6 @@ class ApplicationController < ActionController::API
   # before_action :add_allow_credentials_headers
   require 'json_web_token'
 
-  def see_params_headers
-    puts params.inspect, '', request.headers['Authorization'].inspect
-  end
-
   def authenticate_user!
     header = request.headers['Authorization']
     header = header.split(' ').last if header

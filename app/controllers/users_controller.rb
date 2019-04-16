@@ -2,9 +2,9 @@ class UsersController < ApplicationController
 
   require 'json_web_token'
 
-  before_action :see_params_headers, :authenticate_user!, except: [:create, :update_current_user]
+  before_action :authenticate_user!, except: [:create, :profile_picture ]
 
-  before_action :set_user, only: [:show, :update, :destroy, :update_profile]
+  before_action :set_user, except: [:index, :create]
 
   def index
     @users = if params[:name].present?
@@ -46,6 +46,15 @@ class UsersController < ApplicationController
     @user.update!(bio: params[:bio])
     @user.save!
     render json: @user
+  end
+
+  def profile_picture
+    # @user.avatar.attach(params[:avatar])
+    if @user.update_attributes(params.permit(:profile_picture))
+      render json: @user, status: :ok
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
 
   private
