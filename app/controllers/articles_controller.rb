@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
 
-  before_action :see_params_headers, :authenticate_user!
+  before_action :authenticate_user!
   before_action :set_article, only: [:show, :update, :destroy]
   before_action :find_user, only: [:create, :update]
 

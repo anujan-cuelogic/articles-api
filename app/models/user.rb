@@ -9,8 +9,10 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
 
   has_many :articles
-  has_many :followers, class_name: 'User'
-  has_many :followings, foreign_key: :following_id, class_name: 'User'
+  has_many :follower_leads, class_name: 'Lead'
+  has_many :followers, through: :follower_leads
+  has_many :following_leads, foreign_key: :follower_id, class_name: 'Lead'
+  has_many :followings, through: :following_leads, source: :user
   has_one_attached :avatar
 
   def avatar_url

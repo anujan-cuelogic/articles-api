@@ -21,12 +21,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       token = JsonWebToken.encode(uuid: @user.uuid)
       render json: @user, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer, status: :unprocessable_entity
     end
   end
 
